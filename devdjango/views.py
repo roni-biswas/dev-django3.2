@@ -3,23 +3,31 @@ To render HTML web pages
 ---------------------------------
 """
 
-from django.http import HttpResponse
+# from django.http import HttpResponse
+from django.shortcuts import render
 import random
+from articles.models import Article
 
 
 def home_page(request):
 
-    ranNum = random.randint(10, 9999)
+    random_id = random.randint(1, 4)
 
-    num1 = 25
-    num2 = 75
-    name = "Roni Biswas"
-    cuntry = "Bangladesh"
+    # get data from database
+    article_obj = Article.objects.get(id=random_id)
+    article_queryset = Article.objects.all()
 
-    HTML_CONTENT = f"""
-    <h1>Hi! I'm {name} from {cuntry}.</h1>
-    <h3> Random Number is : roni@{ranNum}</h3>
-    <p>Total number of ______ {num1} + {num2} = {num1+num2}</p>
+    # context = {
+    #     "id" : article_obj.id,
+    #     "title": article_obj.title,
+    #     "content": article_obj.content,
+    # }
+    
+    # HTML_CONTENT = """
+    # <h4><b>Fatch data from database: Article</b></h4>
+    # <p>Id: {id} </br> Title: {title} </br> Content: {content}</p>
+    # """.format(**context)
 
-    """
-    return HttpResponse(HTML_CONTENT)
+    context = {"article_obj":article_obj, "data_list": article_queryset}
+    
+    return render(request, 'home_page.html', context)

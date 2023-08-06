@@ -1,0 +1,9 @@
+
+<h1>Fatch All Data from Database: Article</h1>
+<ul>
+    {% for list in data_list %}
+        {% if list.title %}
+            <li>{{list.id}} : <a href="{% url 'article-view' list.id %}">{{list.title}}--{{list.content}}</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>
